@@ -1,0 +1,11 @@
+{{- range $index, $item := .Values.middlewareTCPs }}
+---
+{{ include "nuc-traefik.renderResource" (dict
+  "root" $
+  "item" $item
+  "kind" "MiddlewareTCP"
+  "defaultApiVersion" $.Values.apiVersions.middlewareTCP
+  "resourceKey" (printf "middlewareTCPs[%d]" $index)
+  "namespaced" true
+) }}
+{{- end }}

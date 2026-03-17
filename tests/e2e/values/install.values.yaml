@@ -1,0 +1,122 @@
+commonLabels:
+  test-suite: e2e
+
+commonAnnotations:
+  test-suite: e2e
+
+apiVersions:
+  ingressRoute: traefik.io/v1alpha1
+  ingressRouteTCP: traefik.io/v1alpha1
+  ingressRouteUDP: traefik.io/v1alpha1
+  middleware: traefik.io/v1alpha1
+  middlewareTCP: traefik.io/v1alpha1
+  serversTransport: traefik.io/v1alpha1
+  serversTransportTCP: traefik.io/v1alpha1
+  tlsOption: traefik.io/v1alpha1
+  tlsStore: traefik.io/v1alpha1
+  traefikService: traefik.io/v1alpha1
+
+middlewares:
+  - name: e2e-api-security
+    spec:
+      stripPrefix:
+        prefixes:
+          - /api
+
+middlewareTCPs:
+  - name: e2e-db-allowlist
+    spec:
+      ipAllowList:
+        sourceRange:
+          - 10.0.0.0/8
+
+serversTransports:
+  - name: e2e-http-transport
+    spec:
+      serverName: backend.e2e.internal
+      forwardingTimeouts:
+        dialTimeout: 5s
+
+serversTransportTCPs:
+  - name: e2e-tcp-transport
+    spec:
+      dialTimeout: 15s
+      tls:
+        serverName: db.e2e.internal
+        insecureSkipVerify: true
+
+tlsOptions:
+  - name: e2e-modern-tls
+    spec:
+      minVersion: VersionTLS12
+      sniStrict: true
+
+tlsStores:
+  - name: default
+    spec:
+      defaultCertificate:
+        secretName: e2e-default-cert
+
+traefikServices:
+  - name: e2e-weighted
+    spec:
+      weighted:
+        services:
+          - name: e2e-backend
+            kind: Service
+            port: 80
+            weight: 90
+            serversTransport: e2e-http-transport
+          - name: e2e-backend-canary
+            kind: Service
+            port: 8080
+            weight: 10
+            serversTransport: e2e-http-transport
+
+ingressRoutes:
+  - name: e2e-http
+    spec:
+      entryPoints:
+        - web
+      routes:
+        - match: Host(`app.e2e.example.com`)
+          kind: Rule
+          middlewares:
+            - name: e2e-api-security
+          services:
+            - name: e2e-weighted
+              kind: TraefikService
+      tls:
+        options:
+          name: e2e-modern-tls
+        store:
+          name: default
+
+ingressRouteTCPs:
+  - name: e2e-tcp
+    spec:
+      entryPoints:
+        - postgres
+      routes:
+        - match: HostSNI(`db.e2e.example.com`)
+          middlewares:
+            - name: e2e-db-allowlist
+          services:
+            - name: e2e-db
+              port: 5432
+              tls: true
+              serversTransport: e2e-tcp-transport
+      tls:
+        options:
+          name: e2e-modern-tls
+        secretName: e2e-db-cert
+
+ingressRouteUDPs:
+  - name: e2e-udp
+    spec:
+      entryPoints:
+        - dns
+      routes:
+        - services:
+            - name: e2e-dns
+              port: 53

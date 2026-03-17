@@ -1,0 +1,11 @@
+{{- range $index, $item := .Values.serversTransportTCPs }}
+---
+{{ include "nuc-traefik.renderResource" (dict
+  "root" $
+  "item" $item
+  "kind" "ServersTransportTCP"
+  "defaultApiVersion" $.Values.apiVersions.serversTransportTCP
+  "resourceKey" (printf "serversTransportTCPs[%d]" $index)
+  "namespaced" true
+) }}
+{{- end }}

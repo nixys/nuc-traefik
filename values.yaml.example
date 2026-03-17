@@ -1,0 +1,251 @@
+# Example values for all supported Traefik Kubernetes CRD resources in this chart.
+# Render with:
+#   helm template nuc-traefik . -f values.yaml.example
+
+# Override the generated chart name if needed.
+nameOverride: ""
+
+# Labels and annotations merged into every rendered resource.
+commonLabels:
+  platform: traefik-crd
+commonAnnotations:
+  team: edge
+
+# Optional API version overrides. The chart defaults already match the Traefik v3.6 bundle.
+apiVersions:
+  ingressRoute: traefik.io/v1alpha1
+  ingressRouteTCP: traefik.io/v1alpha1
+  ingressRouteUDP: traefik.io/v1alpha1
+  middleware: traefik.io/v1alpha1
+  middlewareTCP: traefik.io/v1alpha1
+  serversTransport: traefik.io/v1alpha1
+  serversTransportTCP: traefik.io/v1alpha1
+  tlsOption: traefik.io/v1alpha1
+  tlsStore: traefik.io/v1alpha1
+  traefikService: traefik.io/v1alpha1
+
+# HTTP middleware example with request/response header handling.
+middlewares:
+  - name: api-security
+    namespace: edge
+    labels:
+      component: middleware
+    annotations:
+      note: headers
+    spec:
+      headers:
+        customRequestHeaders:
+          X-Forwarded-Env: production
+          X-Release-Channel: stable
+        customResponseHeaders:
+          X-Served-By: traefik
+        accessControlAllowMethods:
+          - GET
+          - POST
+        accessControlAllowOriginList:
+          - https://app.example.com
+        accessControlMaxAge: 600
+        addVaryHeader: true
+      compress: {}
+
+# TCP middleware example with connection limits and allow list.
+middlewareTCPs:
+  - name: db-allowlist
+    namespace: edge
+    labels:
+      component: middleware-tcp
+    annotations:
+      note: cidr
+    spec:
+      ipAllowList:
+        sourceRange:
+          - 10.0.0.0/8
+          - 192.168.0.0/16
+      inFlightConn:
+        amount: 200
+
+# HTTP transport example for upstream TLS and timeouts.
+serversTransports:
+  - name: backend-transport
+    namespace: edge
+    labels:
+      component: servers-transport
+    annotations:
+      note: https
+    spec:
+      serverName: api.internal.example.com
+      maxIdleConnsPerHost: 32
+      forwardingTimeouts:
+        dialTimeout: 10s
+        responseHeaderTimeout: 15s
+        idleConnTimeout: 90s
+
+# TCP transport example for database backends.
+serversTransportTCPs:
+  - name: database-transport
+    namespace: edge
+    labels:
+      component: servers-transport-tcp
+    annotations:
+      note: database
+    spec:
+      dialTimeout: 30s
+      terminationDelay: 100ms
+      tls:
+        serverName: db.internal.example.com
+        insecureSkipVerify: true
+
+# TLS option example for router-side TLS settings.
+tlsOptions:
+  - name: modern-tls
+    namespace: edge
+    labels:
+      component: tls-option
+    annotations:
+      note: strict
+    spec:
+      minVersion: VersionTLS12
+      maxVersion: VersionTLS13
+      sniStrict: true
+      alpnProtocols:
+        - h2
+        - http/1.1
+      clientAuth:
+        clientAuthType: RequireAndVerifyClientCert
+        secretNames:
+          - edge-client-ca
+
+# TLS store example for the default certificate.
+tlsStores:
+  - name: default
+    namespace: edge
+    labels:
+      component: tls-store
+    annotations:
+      note: default
+    spec:
+      defaultCertificate:
+        secretName: edge-default-cert
+
+# TraefikService example with weighted backends.
+traefikServices:
+  - name: api-weighted
+    namespace: edge
+    labels:
+      component: traefik-service
+    annotations:
+      note: weighted
+    spec:
+      weighted:
+        services:
+          - name: api-v1
+            kind: Service
+            namespace: edge
+            port: 8080
+            weight: 90
+            passHostHeader: true
+            responseForwarding:
+              flushInterval: 100ms
+            serversTransport: backend-transport
+          - name: api-v2
+            kind: Service
+            namespace: edge
+            port: 8080
+            weight: 10
+            passHostHeader: true
+            serversTransport: backend-transport
+
+# HTTP router example referencing Middleware, TLSOption, TLSStore, and TraefikService.
+ingressRoutes:
+  - name: api-http
+    namespace: edge
+    labels:
+      component: ingress-route
+    annotations:
+      note: http
+    spec:
+      entryPoints:
+        - websecure
+      routes:
+        - kind: Rule
+          match: Host(`api.example.com`) && PathPrefix(`/api`)
+          syntax: v3
+          middlewares:
+            - name: api-security
+              namespace: edge
+          observability:
+            accessLogs: true
+            metrics: true
+            tracing: true
+            traceVerbosity: detailed
+          priority: 100
+          services:
+            - name: api-weighted
+              kind: TraefikService
+              namespace: edge
+      tls:
+        certResolver: letsencrypt
+        options:
+          name: modern-tls
+          namespace: edge
+        store:
+          name: default
+          namespace: edge
+
+# TCP router example for TLS-enabled database traffic.
+ingressRouteTCPs:
+  - name: postgres-tcp
+    namespace: edge
+    labels:
+      component: ingress-route-tcp
+    annotations:
+      note: tcp
+    spec:
+      entryPoints:
+        - postgres
+      routes:
+        - match: HostSNI(`db.example.com`)
+          syntax: v3
+          middlewares:
+            - name: db-allowlist
+              namespace: edge
+          services:
+            - name: postgres-primary
+              namespace: edge
+              port: 5432
+              weight: 80
+              tls: true
+              serversTransport: database-transport
+            - name: postgres-replica
+              namespace: edge
+              port: 5432
+              weight: 20
+              tls: true
+              serversTransport: database-transport
+      tls:
+        secretName: postgres-cert
+        options:
+          name: modern-tls
+          namespace: edge
+
+# UDP router example for DNS traffic.
+ingressRouteUDPs:
+  - name: dns-udp
+    namespace: edge
+    labels:
+      component: ingress-route-udp
+    annotations:
+      note: udp
+    spec:
+      entryPoints:
+        - dns
+      routes:
+        - services:
+            - name: dns-service
+              namespace: edge
+              port: 53
+              weight: 100
+            - name: dns-canary
+              namespace: edge
+              port: 53
+              weight: 5

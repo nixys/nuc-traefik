@@ -1,0 +1,71 @@
+# -- Override the default chart label name if needed.
+nameOverride: ""
+
+# -- Extra labels applied to every rendered resource.
+commonLabels: {}
+# -- Extra annotations applied to every rendered resource.
+commonAnnotations: {}
+
+# The defaults below are aligned with the Traefik v3.6 CRD bundle published at:
+# https://raw.githubusercontent.com/traefik/traefik/v3.6/docs/content/reference/dynamic-configuration/kubernetes-crd-definition-v1.yml
+# Override them if your cluster serves another group/version combination.
+apiVersions:
+  # -- Default apiVersion for IngressRoute resources.
+  ingressRoute: traefik.io/v1alpha1
+  # -- Default apiVersion for IngressRouteTCP resources.
+  ingressRouteTCP: traefik.io/v1alpha1
+  # -- Default apiVersion for IngressRouteUDP resources.
+  ingressRouteUDP: traefik.io/v1alpha1
+  # -- Default apiVersion for Middleware resources.
+  middleware: traefik.io/v1alpha1
+  # -- Default apiVersion for MiddlewareTCP resources.
+  middlewareTCP: traefik.io/v1alpha1
+  # -- Default apiVersion for ServersTransport resources.
+  serversTransport: traefik.io/v1alpha1
+  # -- Default apiVersion for ServersTransportTCP resources.
+  serversTransportTCP: traefik.io/v1alpha1
+  # -- Default apiVersion for TLSOption resources.
+  tlsOption: traefik.io/v1alpha1
+  # -- Default apiVersion for TLSStore resources.
+  tlsStore: traefik.io/v1alpha1
+  # -- Default apiVersion for TraefikService resources.
+  traefikService: traefik.io/v1alpha1
+
+# Each list item supports:
+# - name: required
+# - namespace: optional, defaults to the Helm release namespace
+# - labels: optional
+# - annotations: optional
+# - apiVersion: optional override for a single resource
+# - spec: arbitrary Traefik CRD spec
+# - status: optional raw status block for fixtures and synthetic manifests
+
+# -- IngressRoute resources to render.
+ingressRoutes: []
+
+# -- IngressRouteTCP resources to render.
+ingressRouteTCPs: []
+
+# -- IngressRouteUDP resources to render.
+ingressRouteUDPs: []
+
+# -- Middleware resources to render.
+middlewares: []
+
+# -- MiddlewareTCP resources to render.
+middlewareTCPs: []
+
+# -- ServersTransport resources to render.
+serversTransports: []
+
+# -- ServersTransportTCP resources to render.
+serversTransportTCPs: []
+
+# -- TLSOption resources to render.
+tlsOptions: []
+
+# -- TLSStore resources to render.
+tlsStores: []
+
+# -- TraefikService resources to render.
+traefikServices: []

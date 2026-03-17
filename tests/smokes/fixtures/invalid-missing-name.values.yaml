@@ -1,0 +1,8 @@
+ingressRoutes:
+  - namespace: edge
+    spec:
+      routes:
+        - match: Host(`invalid.example.com`)
+          services:
+            - name: invalid-backend
+              port: 80

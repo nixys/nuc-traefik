@@ -1,0 +1,7 @@
+---
+apiVersion: v2
+name: nuc-traefik
+description: Helm chart for Traefik Kubernetes CRD resources
+type: application
+version: 0.1.0
+appVersion: "v3.6"

@@ -1,0 +1,11 @@
+{{- range $index, $item := .Values.ingressRoutes }}
+---
+{{ include "nuc-traefik.renderResource" (dict
+  "root" $
+  "item" $item
+  "kind" "IngressRoute"
+  "defaultApiVersion" $.Values.apiVersions.ingressRoute
+  "resourceKey" (printf "ingressRoutes[%d]" $index)
+  "namespaced" true
+) }}
+{{- end }}

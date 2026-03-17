@@ -1,0 +1,11 @@
+{{- range $index, $item := .Values.tlsStores }}
+---
+{{ include "nuc-traefik.renderResource" (dict
+  "root" $
+  "item" $item
+  "kind" "TLSStore"
+  "defaultApiVersion" $.Values.apiVersions.tlsStore
+  "resourceKey" (printf "tlsStores[%d]" $index)
+  "namespaced" true
+) }}
+{{- end }}

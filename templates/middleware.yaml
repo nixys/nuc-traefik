@@ -1,0 +1,11 @@
+{{- range $index, $item := .Values.middlewares }}
+---
+{{ include "nuc-traefik.renderResource" (dict
+  "root" $
+  "item" $item
+  "kind" "Middleware"
+  "defaultApiVersion" $.Values.apiVersions.middleware
+  "resourceKey" (printf "middlewares[%d]" $index)
+  "namespaced" true
+) }}
+{{- end }}

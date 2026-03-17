@@ -85,31 +85,7 @@ The value contract is validated by [values.schema.json](values.schema.json).
 
 This section is generated from [values.yaml](values.yaml) by `helm-docs`. Edit [values.yaml](values.yaml) comments or [docs/README.md.gotmpl](docs/README.md.gotmpl), then run `pre-commit run helm-docs --all-files` or `make docs`.
 
-| Key | Type | Default | Description |
-|-----|------|---------|-------------|
-| apiVersions.ingressRoute | string | `"traefik.io/v1alpha1"` | Default apiVersion for IngressRoute resources. |
-| apiVersions.ingressRouteTCP | string | `"traefik.io/v1alpha1"` | Default apiVersion for IngressRouteTCP resources. |
-| apiVersions.ingressRouteUDP | string | `"traefik.io/v1alpha1"` | Default apiVersion for IngressRouteUDP resources. |
-| apiVersions.middleware | string | `"traefik.io/v1alpha1"` | Default apiVersion for Middleware resources. |
-| apiVersions.middlewareTCP | string | `"traefik.io/v1alpha1"` | Default apiVersion for MiddlewareTCP resources. |
-| apiVersions.serversTransport | string | `"traefik.io/v1alpha1"` | Default apiVersion for ServersTransport resources. |
-| apiVersions.serversTransportTCP | string | `"traefik.io/v1alpha1"` | Default apiVersion for ServersTransportTCP resources. |
-| apiVersions.tlsOption | string | `"traefik.io/v1alpha1"` | Default apiVersion for TLSOption resources. |
-| apiVersions.tlsStore | string | `"traefik.io/v1alpha1"` | Default apiVersion for TLSStore resources. |
-| apiVersions.traefikService | string | `"traefik.io/v1alpha1"` | Default apiVersion for TraefikService resources. |
-| commonAnnotations | object | `{}` | Extra annotations applied to every rendered resource. |
-| commonLabels | object | `{}` | Extra labels applied to every rendered resource. |
-| ingressRouteTCPs | list | `[]` | IngressRouteTCP resources to render. |
-| ingressRouteUDPs | list | `[]` | IngressRouteUDP resources to render. |
-| ingressRoutes | list | `[]` | IngressRoute resources to render. |
-| middlewareTCPs | list | `[]` | MiddlewareTCP resources to render. |
-| middlewares | list | `[]` | Middleware resources to render. |
-| nameOverride | string | `""` | Override the default chart label name if needed. |
-| serversTransportTCPs | list | `[]` | ServersTransportTCP resources to render. |
-| serversTransports | list | `[]` | ServersTransport resources to render. |
-| tlsOptions | list | `[]` | TLSOption resources to render. |
-| tlsStores | list | `[]` | TLSStore resources to render. |
-| traefikServices | list | `[]` | TraefikService resources to render. |
+{{ template "chart.valuesTable" . }}
 
 ## Included Values Files
 
