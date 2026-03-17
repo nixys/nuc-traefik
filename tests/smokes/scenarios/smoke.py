@@ -257,12 +257,21 @@ def run_smoke_suite(args) -> int:
     repo_root = Path(args.chart_dir).resolve()
     workdir, chart_dir = chart.stage_chart(repo_root, args.workdir)
     schema_location = args.schema_location
-    if not schema_location:
+    schema_root = None
+    if schema_location:
+        schema_root = crd_schema.resolve_local_schema_root(
+            schema_location,
+            base_dir=repo_root,
+        )
+    else:
         schema_root = workdir / "schemas"
+
+    if schema_root is not None:
         crd_schema.export_kubeconform_schemas(
             crd_bundle=repo_root / "tests" / "fixtures" / "traefik-crd-definition-v1.yml",
             output_dir=schema_root,
         )
+    if not schema_location:
         schema_location = crd_schema.schema_location_template(schema_root)
 
     context = SmokeContext(

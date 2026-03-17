@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+from urllib.parse import urlparse
 
 import yaml
 
@@ -58,3 +59,20 @@ def export_kubeconform_schemas(*, crd_bundle: Path, output_dir: Path) -> Path:
 
 def schema_location_template(schema_root: Path) -> str:
     return str(schema_root / "{{.Group}}" / "{{.ResourceKind}}_{{.ResourceAPIVersion}}.json")
+
+
+def resolve_local_schema_root(schema_location: str, *, base_dir: Path) -> Path | None:
+    parsed = urlparse(schema_location)
+    if parsed.scheme:
+        return None
+
+    group_token = "{{.Group}}"
+    group_index = schema_location.find(group_token)
+    if group_index == -1:
+        return None
+
+    root_text = schema_location[:group_index].rstrip("/\\")
+    root = Path(root_text) if root_text else Path(".")
+    if not root.is_absolute():
+        root = (base_dir / root).resolve()
+    return root
