@@ -47,7 +47,7 @@ The chart can render these Traefik CRD kinds:
 
 ## Values Model
 
-Each top-level list in [values.yaml](values.yaml) maps to one Traefik CRD kind:
+Each top-level map in [values.yaml](values.yaml) maps to one Traefik CRD kind:
 
 - `ingressRoutes`
 - `ingressRouteTCPs`
@@ -60,7 +60,7 @@ Each top-level list in [values.yaml](values.yaml) maps to one Traefik CRD kind:
 - `tlsStores`
 - `traefikServices`
 
-Every list item uses the same generic contract:
+Every map entry uses the same generic contract:
 
 | Field | Required | Description |
 |-------|----------|-------------|
@@ -72,6 +72,8 @@ Every list item uses the same generic contract:
 | `apiVersion` | no | Per-resource API version override. |
 | `spec` | no | Raw resource spec rendered as-is. |
 | `status` | no | Optional raw status block. Usually useful only for fixtures and synthetic manifests. |
+
+The map key is only an identifier inside `values.yaml`; the rendered Kubernetes object name still comes from the required `name` field.
 
 Global controls:
 
@@ -100,87 +102,87 @@ This section is generated from [values.yaml](values.yaml) by `helm-docs`. Edit [
 | apiVersions.traefikService | string | `"traefik.io/v1alpha1"` | Default apiVersion for TraefikService resources. |
 | commonAnnotations | object | `{}` | Extra annotations applied to every rendered resource. |
 | commonLabels | object | `{}` | Extra labels applied to every rendered resource. |
-| ingressRouteTCPs[0].annotations | object | {} | Resource-specific annotations merged on top of commonAnnotations. |
-| ingressRouteTCPs[0].apiVersion | string | "" | Per-resource apiVersion override. |
-| ingressRouteTCPs[0].enabled | bool | `false` | Enable rendering of this resource item. |
-| ingressRouteTCPs[0].labels | object | {} | Resource-specific labels merged on top of built-in chart labels and commonLabels. |
-| ingressRouteTCPs[0].name | string | "" | Resource name. |
-| ingressRouteTCPs[0].namespace | string | "" | Resource namespace. Defaults to the Helm release namespace when empty. |
-| ingressRouteTCPs[0].spec | object | {} | Arbitrary resource spec rendered as-is. |
-| ingressRouteTCPs[0].status | object | {} | Optional resource status rendered as-is for fixtures and synthetic manifests. |
-| ingressRouteUDPs[0].annotations | object | {} | Resource-specific annotations merged on top of commonAnnotations. |
-| ingressRouteUDPs[0].apiVersion | string | "" | Per-resource apiVersion override. |
-| ingressRouteUDPs[0].enabled | bool | `false` | Enable rendering of this resource item. |
-| ingressRouteUDPs[0].labels | object | {} | Resource-specific labels merged on top of built-in chart labels and commonLabels. |
-| ingressRouteUDPs[0].name | string | "" | Resource name. |
-| ingressRouteUDPs[0].namespace | string | "" | Resource namespace. Defaults to the Helm release namespace when empty. |
-| ingressRouteUDPs[0].spec | object | {} | Arbitrary resource spec rendered as-is. |
-| ingressRouteUDPs[0].status | object | {} | Optional resource status rendered as-is for fixtures and synthetic manifests. |
-| ingressRoutes[0].annotations | object | {} | Resource-specific annotations merged on top of commonAnnotations. |
-| ingressRoutes[0].apiVersion | string | "" | Per-resource apiVersion override. |
-| ingressRoutes[0].enabled | bool | `false` | Enable rendering of this resource item. |
-| ingressRoutes[0].labels | object | {} | Resource-specific labels merged on top of built-in chart labels and commonLabels. |
-| ingressRoutes[0].name | string | "" | Resource name. |
-| ingressRoutes[0].namespace | string | "" | Resource namespace. Defaults to the Helm release namespace when empty. |
-| ingressRoutes[0].spec | object | {} | Arbitrary resource spec rendered as-is. |
-| ingressRoutes[0].status | object | {} | Optional resource status rendered as-is for fixtures and synthetic manifests. |
-| middlewareTCPs[0].annotations | object | {} | Resource-specific annotations merged on top of commonAnnotations. |
-| middlewareTCPs[0].apiVersion | string | "" | Per-resource apiVersion override. |
-| middlewareTCPs[0].enabled | bool | `false` | Enable rendering of this resource item. |
-| middlewareTCPs[0].labels | object | {} | Resource-specific labels merged on top of built-in chart labels and commonLabels. |
-| middlewareTCPs[0].name | string | "" | Resource name. |
-| middlewareTCPs[0].namespace | string | "" | Resource namespace. Defaults to the Helm release namespace when empty. |
-| middlewareTCPs[0].spec | object | {} | Arbitrary resource spec rendered as-is. |
-| middlewareTCPs[0].status | object | {} | Optional resource status rendered as-is for fixtures and synthetic manifests. |
-| middlewares[0].annotations | object | {} | Resource-specific annotations merged on top of commonAnnotations. |
-| middlewares[0].apiVersion | string | "" | Per-resource apiVersion override. |
-| middlewares[0].enabled | bool | `false` | Enable rendering of this resource item. |
-| middlewares[0].labels | object | {} | Resource-specific labels merged on top of built-in chart labels and commonLabels. |
-| middlewares[0].name | string | "" | Resource name. |
-| middlewares[0].namespace | string | "" | Resource namespace. Defaults to the Helm release namespace when empty. |
-| middlewares[0].spec | object | {} | Arbitrary resource spec rendered as-is. |
-| middlewares[0].status | object | {} | Optional resource status rendered as-is for fixtures and synthetic manifests. |
+| ingressRouteTCPs.example.annotations | object | {} | Resource-specific annotations merged on top of commonAnnotations. |
+| ingressRouteTCPs.example.apiVersion | string | "" | Per-resource apiVersion override. |
+| ingressRouteTCPs.example.enabled | bool | `false` | Enable rendering of this resource item. |
+| ingressRouteTCPs.example.labels | object | {} | Resource-specific labels merged on top of built-in chart labels and commonLabels. |
+| ingressRouteTCPs.example.name | string | "" | Resource name. |
+| ingressRouteTCPs.example.namespace | string | "" | Resource namespace. Defaults to the Helm release namespace when empty. |
+| ingressRouteTCPs.example.spec | object | {} | Arbitrary resource spec rendered as-is. |
+| ingressRouteTCPs.example.status | object | {} | Optional resource status rendered as-is for fixtures and synthetic manifests. |
+| ingressRouteUDPs.example.annotations | object | {} | Resource-specific annotations merged on top of commonAnnotations. |
+| ingressRouteUDPs.example.apiVersion | string | "" | Per-resource apiVersion override. |
+| ingressRouteUDPs.example.enabled | bool | `false` | Enable rendering of this resource item. |
+| ingressRouteUDPs.example.labels | object | {} | Resource-specific labels merged on top of built-in chart labels and commonLabels. |
+| ingressRouteUDPs.example.name | string | "" | Resource name. |
+| ingressRouteUDPs.example.namespace | string | "" | Resource namespace. Defaults to the Helm release namespace when empty. |
+| ingressRouteUDPs.example.spec | object | {} | Arbitrary resource spec rendered as-is. |
+| ingressRouteUDPs.example.status | object | {} | Optional resource status rendered as-is for fixtures and synthetic manifests. |
+| ingressRoutes.example.annotations | object | {} | Resource-specific annotations merged on top of commonAnnotations. |
+| ingressRoutes.example.apiVersion | string | "" | Per-resource apiVersion override. |
+| ingressRoutes.example.enabled | bool | `false` | Enable rendering of this resource item. |
+| ingressRoutes.example.labels | object | {} | Resource-specific labels merged on top of built-in chart labels and commonLabels. |
+| ingressRoutes.example.name | string | "" | Resource name. |
+| ingressRoutes.example.namespace | string | "" | Resource namespace. Defaults to the Helm release namespace when empty. |
+| ingressRoutes.example.spec | object | {} | Arbitrary resource spec rendered as-is. |
+| ingressRoutes.example.status | object | {} | Optional resource status rendered as-is for fixtures and synthetic manifests. |
+| middlewareTCPs.example.annotations | object | {} | Resource-specific annotations merged on top of commonAnnotations. |
+| middlewareTCPs.example.apiVersion | string | "" | Per-resource apiVersion override. |
+| middlewareTCPs.example.enabled | bool | `false` | Enable rendering of this resource item. |
+| middlewareTCPs.example.labels | object | {} | Resource-specific labels merged on top of built-in chart labels and commonLabels. |
+| middlewareTCPs.example.name | string | "" | Resource name. |
+| middlewareTCPs.example.namespace | string | "" | Resource namespace. Defaults to the Helm release namespace when empty. |
+| middlewareTCPs.example.spec | object | {} | Arbitrary resource spec rendered as-is. |
+| middlewareTCPs.example.status | object | {} | Optional resource status rendered as-is for fixtures and synthetic manifests. |
+| middlewares.example.annotations | object | {} | Resource-specific annotations merged on top of commonAnnotations. |
+| middlewares.example.apiVersion | string | "" | Per-resource apiVersion override. |
+| middlewares.example.enabled | bool | `false` | Enable rendering of this resource item. |
+| middlewares.example.labels | object | {} | Resource-specific labels merged on top of built-in chart labels and commonLabels. |
+| middlewares.example.name | string | "" | Resource name. |
+| middlewares.example.namespace | string | "" | Resource namespace. Defaults to the Helm release namespace when empty. |
+| middlewares.example.spec | object | {} | Arbitrary resource spec rendered as-is. |
+| middlewares.example.status | object | {} | Optional resource status rendered as-is for fixtures and synthetic manifests. |
 | nameOverride | string | `""` | Override the default chart label name if needed. |
-| serversTransportTCPs[0].annotations | object | {} | Resource-specific annotations merged on top of commonAnnotations. |
-| serversTransportTCPs[0].apiVersion | string | "" | Per-resource apiVersion override. |
-| serversTransportTCPs[0].enabled | bool | `false` | Enable rendering of this resource item. |
-| serversTransportTCPs[0].labels | object | {} | Resource-specific labels merged on top of built-in chart labels and commonLabels. |
-| serversTransportTCPs[0].name | string | "" | Resource name. |
-| serversTransportTCPs[0].namespace | string | "" | Resource namespace. Defaults to the Helm release namespace when empty. |
-| serversTransportTCPs[0].spec | object | {} | Arbitrary resource spec rendered as-is. |
-| serversTransportTCPs[0].status | object | {} | Optional resource status rendered as-is for fixtures and synthetic manifests. |
-| serversTransports[0].annotations | object | {} | Resource-specific annotations merged on top of commonAnnotations. |
-| serversTransports[0].apiVersion | string | "" | Per-resource apiVersion override. |
-| serversTransports[0].enabled | bool | `false` | Enable rendering of this resource item. |
-| serversTransports[0].labels | object | {} | Resource-specific labels merged on top of built-in chart labels and commonLabels. |
-| serversTransports[0].name | string | "" | Resource name. |
-| serversTransports[0].namespace | string | "" | Resource namespace. Defaults to the Helm release namespace when empty. |
-| serversTransports[0].spec | object | {} | Arbitrary resource spec rendered as-is. |
-| serversTransports[0].status | object | {} | Optional resource status rendered as-is for fixtures and synthetic manifests. |
-| tlsOptions[0].annotations | object | {} | Resource-specific annotations merged on top of commonAnnotations. |
-| tlsOptions[0].apiVersion | string | "" | Per-resource apiVersion override. |
-| tlsOptions[0].enabled | bool | `false` | Enable rendering of this resource item. |
-| tlsOptions[0].labels | object | {} | Resource-specific labels merged on top of built-in chart labels and commonLabels. |
-| tlsOptions[0].name | string | "" | Resource name. |
-| tlsOptions[0].namespace | string | "" | Resource namespace. Defaults to the Helm release namespace when empty. |
-| tlsOptions[0].spec | object | {} | Arbitrary resource spec rendered as-is. |
-| tlsOptions[0].status | object | {} | Optional resource status rendered as-is for fixtures and synthetic manifests. |
-| tlsStores[0].annotations | object | {} | Resource-specific annotations merged on top of commonAnnotations. |
-| tlsStores[0].apiVersion | string | "" | Per-resource apiVersion override. |
-| tlsStores[0].enabled | bool | `false` | Enable rendering of this resource item. |
-| tlsStores[0].labels | object | {} | Resource-specific labels merged on top of built-in chart labels and commonLabels. |
-| tlsStores[0].name | string | "" | Resource name. |
-| tlsStores[0].namespace | string | "" | Resource namespace. Defaults to the Helm release namespace when empty. |
-| tlsStores[0].spec | object | {} | Arbitrary resource spec rendered as-is. |
-| tlsStores[0].status | object | {} | Optional resource status rendered as-is for fixtures and synthetic manifests. |
-| traefikServices[0].annotations | object | {} | Resource-specific annotations merged on top of commonAnnotations. |
-| traefikServices[0].apiVersion | string | "" | Per-resource apiVersion override. |
-| traefikServices[0].enabled | bool | `false` | Enable rendering of this resource item. |
-| traefikServices[0].labels | object | {} | Resource-specific labels merged on top of built-in chart labels and commonLabels. |
-| traefikServices[0].name | string | "" | Resource name. |
-| traefikServices[0].namespace | string | "" | Resource namespace. Defaults to the Helm release namespace when empty. |
-| traefikServices[0].spec | object | {} | Arbitrary resource spec rendered as-is. |
-| traefikServices[0].status | object | {} | Optional resource status rendered as-is for fixtures and synthetic manifests. |
+| serversTransportTCPs.example.annotations | object | {} | Resource-specific annotations merged on top of commonAnnotations. |
+| serversTransportTCPs.example.apiVersion | string | "" | Per-resource apiVersion override. |
+| serversTransportTCPs.example.enabled | bool | `false` | Enable rendering of this resource item. |
+| serversTransportTCPs.example.labels | object | {} | Resource-specific labels merged on top of built-in chart labels and commonLabels. |
+| serversTransportTCPs.example.name | string | "" | Resource name. |
+| serversTransportTCPs.example.namespace | string | "" | Resource namespace. Defaults to the Helm release namespace when empty. |
+| serversTransportTCPs.example.spec | object | {} | Arbitrary resource spec rendered as-is. |
+| serversTransportTCPs.example.status | object | {} | Optional resource status rendered as-is for fixtures and synthetic manifests. |
+| serversTransports.example.annotations | object | {} | Resource-specific annotations merged on top of commonAnnotations. |
+| serversTransports.example.apiVersion | string | "" | Per-resource apiVersion override. |
+| serversTransports.example.enabled | bool | `false` | Enable rendering of this resource item. |
+| serversTransports.example.labels | object | {} | Resource-specific labels merged on top of built-in chart labels and commonLabels. |
+| serversTransports.example.name | string | "" | Resource name. |
+| serversTransports.example.namespace | string | "" | Resource namespace. Defaults to the Helm release namespace when empty. |
+| serversTransports.example.spec | object | {} | Arbitrary resource spec rendered as-is. |
+| serversTransports.example.status | object | {} | Optional resource status rendered as-is for fixtures and synthetic manifests. |
+| tlsOptions.example.annotations | object | {} | Resource-specific annotations merged on top of commonAnnotations. |
+| tlsOptions.example.apiVersion | string | "" | Per-resource apiVersion override. |
+| tlsOptions.example.enabled | bool | `false` | Enable rendering of this resource item. |
+| tlsOptions.example.labels | object | {} | Resource-specific labels merged on top of built-in chart labels and commonLabels. |
+| tlsOptions.example.name | string | "" | Resource name. |
+| tlsOptions.example.namespace | string | "" | Resource namespace. Defaults to the Helm release namespace when empty. |
+| tlsOptions.example.spec | object | {} | Arbitrary resource spec rendered as-is. |
+| tlsOptions.example.status | object | {} | Optional resource status rendered as-is for fixtures and synthetic manifests. |
+| tlsStores.example.annotations | object | {} | Resource-specific annotations merged on top of commonAnnotations. |
+| tlsStores.example.apiVersion | string | "" | Per-resource apiVersion override. |
+| tlsStores.example.enabled | bool | `false` | Enable rendering of this resource item. |
+| tlsStores.example.labels | object | {} | Resource-specific labels merged on top of built-in chart labels and commonLabels. |
+| tlsStores.example.name | string | "" | Resource name. |
+| tlsStores.example.namespace | string | "" | Resource namespace. Defaults to the Helm release namespace when empty. |
+| tlsStores.example.spec | object | {} | Arbitrary resource spec rendered as-is. |
+| tlsStores.example.status | object | {} | Optional resource status rendered as-is for fixtures and synthetic manifests. |
+| traefikServices.example.annotations | object | {} | Resource-specific annotations merged on top of commonAnnotations. |
+| traefikServices.example.apiVersion | string | "" | Per-resource apiVersion override. |
+| traefikServices.example.enabled | bool | `false` | Enable rendering of this resource item. |
+| traefikServices.example.labels | object | {} | Resource-specific labels merged on top of built-in chart labels and commonLabels. |
+| traefikServices.example.name | string | "" | Resource name. |
+| traefikServices.example.namespace | string | "" | Resource namespace. Defaults to the Helm release namespace when empty. |
+| traefikServices.example.spec | object | {} | Arbitrary resource spec rendered as-is. |
+| traefikServices.example.status | object | {} | Optional resource status rendered as-is for fixtures and synthetic manifests. |
 
 ## Included Values Files
 

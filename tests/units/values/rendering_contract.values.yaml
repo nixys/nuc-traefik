@@ -13,7 +13,8 @@ apiVersions:
   tlsStore: example.net/v1beta1
 
 ingressRoutes:
-  - name: merged-ingressroute
+  merged:
+    name: merged-ingressroute
     apiVersion: example.net/v1alpha1
     labels:
       component: ingress-route
@@ -30,7 +31,8 @@ ingressRoutes:
               port: 8080
 
 tlsStores:
-  - name: tenant-store
+  tenant:
+    name: tenant-store
     namespace: tenant-system
     labels:
       component: tls-store

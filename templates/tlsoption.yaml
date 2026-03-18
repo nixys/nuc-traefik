@@ -1,4 +1,4 @@
-{{- range $index, $item := .Values.tlsOptions }}
+{{- range $key, $item := .Values.tlsOptions }}
 {{- if (or (not (hasKey $item "enabled")) $item.enabled) }}
 ---
 {{ include "nuc-traefik.renderResource" (dict
@@ -6,7 +6,7 @@
   "item" $item
   "kind" "TLSOption"
   "defaultApiVersion" $.Values.apiVersions.tlsOption
-  "resourceKey" (printf "tlsOptions[%d]" $index)
+  "resourceKey" (printf "tlsOptions.%v" $key)
   "namespaced" true
 ) }}
 {{- end }}

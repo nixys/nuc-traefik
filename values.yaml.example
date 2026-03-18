@@ -26,7 +26,8 @@ apiVersions:
 
 # HTTP middleware example with request/response header handling.
 middlewares:
-  - name: api-security
+  apiSecurity:
+    name: api-security
     namespace: edge
     labels:
       component: middleware
@@ -50,7 +51,8 @@ middlewares:
 
 # TCP middleware example with connection limits and allow list.
 middlewareTCPs:
-  - name: db-allowlist
+  dbAllowlist:
+    name: db-allowlist
     namespace: edge
     labels:
       component: middleware-tcp
@@ -66,7 +68,8 @@ middlewareTCPs:
 
 # HTTP transport example for upstream TLS and timeouts.
 serversTransports:
-  - name: backend-transport
+  backendTransport:
+    name: backend-transport
     namespace: edge
     labels:
       component: servers-transport
@@ -82,7 +85,8 @@ serversTransports:
 
 # TCP transport example for database backends.
 serversTransportTCPs:
-  - name: database-transport
+  databaseTransport:
+    name: database-transport
     namespace: edge
     labels:
       component: servers-transport-tcp
@@ -97,7 +101,8 @@ serversTransportTCPs:
 
 # TLS option example for router-side TLS settings.
 tlsOptions:
-  - name: modern-tls
+  modernTls:
+    name: modern-tls
     namespace: edge
     labels:
       component: tls-option
@@ -117,7 +122,8 @@ tlsOptions:
 
 # TLS store example for the default certificate.
 tlsStores:
-  - name: default
+  defaultStore:
+    name: default
     namespace: edge
     labels:
       component: tls-store
@@ -129,7 +135,8 @@ tlsStores:
 
 # TraefikService example with weighted backends.
 traefikServices:
-  - name: api-weighted
+  apiWeighted:
+    name: api-weighted
     namespace: edge
     labels:
       component: traefik-service
@@ -157,7 +164,8 @@ traefikServices:
 
 # HTTP router example referencing Middleware, TLSOption, TLSStore, and TraefikService.
 ingressRoutes:
-  - name: api-http
+  apiHttp:
+    name: api-http
     namespace: edge
     labels:
       component: ingress-route
@@ -194,7 +202,8 @@ ingressRoutes:
 
 # TCP router example for TLS-enabled database traffic.
 ingressRouteTCPs:
-  - name: postgres-tcp
+  postgresTcp:
+    name: postgres-tcp
     namespace: edge
     labels:
       component: ingress-route-tcp
@@ -230,7 +239,8 @@ ingressRouteTCPs:
 
 # UDP router example for DNS traffic.
 ingressRouteUDPs:
-  - name: dns-udp
+  dnsUdp:
+    name: dns-udp
     namespace: edge
     labels:
       component: ingress-route-udp

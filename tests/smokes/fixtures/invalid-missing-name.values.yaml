@@ -1,5 +1,6 @@
 ingressRoutes:
-  - namespace: edge
+  invalid:
+    namespace: edge
     spec:
       routes:
         - match: Host(`invalid.example.com`)

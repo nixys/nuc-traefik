@@ -1,4 +1,4 @@
-{{- range $index, $item := .Values.ingressRoutes }}
+{{- range $key, $item := .Values.ingressRoutes }}
 {{- if (or (not (hasKey $item "enabled")) $item.enabled) }}
 ---
 {{ include "nuc-traefik.renderResource" (dict
@@ -6,7 +6,7 @@
   "item" $item
   "kind" "IngressRoute"
   "defaultApiVersion" $.Values.apiVersions.ingressRoute
-  "resourceKey" (printf "ingressRoutes[%d]" $index)
+  "resourceKey" (printf "ingressRoutes.%v" $key)
   "namespaced" true
 ) }}
 {{- end }}

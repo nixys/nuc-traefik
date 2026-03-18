@@ -31,13 +31,14 @@ apiVersions:
   # -- Default apiVersion for TraefikService resources.
   traefikService: traefik.io/v1alpha1
 
-# Resource lists below are intentionally seeded with one disabled placeholder item so helm-docs
+# Resource maps below are intentionally seeded with one disabled placeholder item so helm-docs
 # can expose the nested resource-item contract. Templates skip items with enabled=false, so the
 # default chart values still render no manifests.
 
 # IngressRoute resources to render.
 ingressRoutes:
-  - # -- Enable rendering of this resource item.
+  example:
+    # -- Enable rendering of this resource item.
     enabled: false
     # -- Resource name.
     # @default -- ""
@@ -67,7 +68,8 @@ ingressRoutes:
 
 # IngressRouteTCP resources to render.
 ingressRouteTCPs:
-  - # -- Enable rendering of this resource item.
+  example:
+    # -- Enable rendering of this resource item.
     enabled: false
     # -- Resource name.
     # @default -- ""
@@ -97,7 +99,8 @@ ingressRouteTCPs:
 
 # IngressRouteUDP resources to render.
 ingressRouteUDPs:
-  - # -- Enable rendering of this resource item.
+  example:
+    # -- Enable rendering of this resource item.
     enabled: false
     # -- Resource name.
     # @default -- ""
@@ -127,7 +130,8 @@ ingressRouteUDPs:
 
 # Middleware resources to render.
 middlewares:
-  - # -- Enable rendering of this resource item.
+  example:
+    # -- Enable rendering of this resource item.
     enabled: false
     # -- Resource name.
     # @default -- ""
@@ -157,7 +161,8 @@ middlewares:
 
 # MiddlewareTCP resources to render.
 middlewareTCPs:
-  - # -- Enable rendering of this resource item.
+  example:
+    # -- Enable rendering of this resource item.
     enabled: false
     # -- Resource name.
     # @default -- ""
@@ -187,7 +192,8 @@ middlewareTCPs:
 
 # ServersTransport resources to render.
 serversTransports:
-  - # -- Enable rendering of this resource item.
+  example:
+    # -- Enable rendering of this resource item.
     enabled: false
     # -- Resource name.
     # @default -- ""
@@ -217,7 +223,8 @@ serversTransports:
 
 # ServersTransportTCP resources to render.
 serversTransportTCPs:
-  - # -- Enable rendering of this resource item.
+  example:
+    # -- Enable rendering of this resource item.
     enabled: false
     # -- Resource name.
     # @default -- ""
@@ -247,7 +254,8 @@ serversTransportTCPs:
 
 # TLSOption resources to render.
 tlsOptions:
-  - # -- Enable rendering of this resource item.
+  example:
+    # -- Enable rendering of this resource item.
     enabled: false
     # -- Resource name.
     # @default -- ""
@@ -277,7 +285,8 @@ tlsOptions:
 
 # TLSStore resources to render.
 tlsStores:
-  - # -- Enable rendering of this resource item.
+  example:
+    # -- Enable rendering of this resource item.
     enabled: false
     # -- Resource name.
     # @default -- ""
@@ -307,7 +316,8 @@ tlsStores:
 
 # TraefikService resources to render.
 traefikServices:
-  - # -- Enable rendering of this resource item.
+  example:
+    # -- Enable rendering of this resource item.
     enabled: false
     # -- Resource name.
     # @default -- ""

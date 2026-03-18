@@ -1,4 +1,4 @@
-{{- range $index, $item := .Values.serversTransports }}
+{{- range $key, $item := .Values.serversTransports }}
 {{- if (or (not (hasKey $item "enabled")) $item.enabled) }}
 ---
 {{ include "nuc-traefik.renderResource" (dict
@@ -6,7 +6,7 @@
   "item" $item
   "kind" "ServersTransport"
   "defaultApiVersion" $.Values.apiVersions.serversTransport
-  "resourceKey" (printf "serversTransports[%d]" $index)
+  "resourceKey" (printf "serversTransports.%v" $key)
   "namespaced" true
 ) }}
 {{- end }}

@@ -17,28 +17,32 @@ apiVersions:
   traefikService: traefik.io/v1alpha1
 
 middlewares:
-  - name: e2e-api-security
+  apiSecurity:
+    name: e2e-api-security
     spec:
       stripPrefix:
         prefixes:
           - /api
 
 middlewareTCPs:
-  - name: e2e-db-allowlist
+  dbAllowlist:
+    name: e2e-db-allowlist
     spec:
       ipAllowList:
         sourceRange:
           - 10.0.0.0/8
 
 serversTransports:
-  - name: e2e-http-transport
+  httpTransport:
+    name: e2e-http-transport
     spec:
       serverName: backend.e2e.internal
       forwardingTimeouts:
         dialTimeout: 5s
 
 serversTransportTCPs:
-  - name: e2e-tcp-transport
+  tcpTransport:
+    name: e2e-tcp-transport
     spec:
       dialTimeout: 15s
       tls:
@@ -46,19 +50,22 @@ serversTransportTCPs:
         insecureSkipVerify: true
 
 tlsOptions:
-  - name: e2e-modern-tls
+  modernTls:
+    name: e2e-modern-tls
     spec:
       minVersion: VersionTLS12
       sniStrict: true
 
 tlsStores:
-  - name: default
+  defaultStore:
+    name: default
     spec:
       defaultCertificate:
         secretName: e2e-default-cert
 
 traefikServices:
-  - name: e2e-weighted
+  weighted:
+    name: e2e-weighted
     spec:
       weighted:
         services:
@@ -74,7 +81,8 @@ traefikServices:
             serversTransport: e2e-http-transport
 
 ingressRoutes:
-  - name: e2e-http
+  http:
+    name: e2e-http
     spec:
       entryPoints:
         - web
@@ -93,7 +101,8 @@ ingressRoutes:
           name: default
 
 ingressRouteTCPs:
-  - name: e2e-tcp
+  tcp:
+    name: e2e-tcp
     spec:
       entryPoints:
         - postgres
@@ -112,7 +121,8 @@ ingressRouteTCPs:
         secretName: e2e-db-cert
 
 ingressRouteUDPs:
-  - name: e2e-udp
+  udp:
+    name: e2e-udp
     spec:
       entryPoints:
         - dns

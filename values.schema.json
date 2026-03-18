@@ -55,44 +55,44 @@
       }
     },
     "ingressRoutes": {
-      "$ref": "#/definitions/resourceList",
-      "description": "List of IngressRoute resources."
+      "$ref": "#/definitions/resourceMap",
+      "description": "Map of IngressRoute resources."
     },
     "ingressRouteTCPs": {
-      "$ref": "#/definitions/resourceList",
-      "description": "List of IngressRouteTCP resources."
+      "$ref": "#/definitions/resourceMap",
+      "description": "Map of IngressRouteTCP resources."
     },
     "ingressRouteUDPs": {
-      "$ref": "#/definitions/resourceList",
-      "description": "List of IngressRouteUDP resources."
+      "$ref": "#/definitions/resourceMap",
+      "description": "Map of IngressRouteUDP resources."
     },
     "middlewares": {
-      "$ref": "#/definitions/resourceList",
-      "description": "List of Middleware resources."
+      "$ref": "#/definitions/resourceMap",
+      "description": "Map of Middleware resources."
     },
     "middlewareTCPs": {
-      "$ref": "#/definitions/resourceList",
-      "description": "List of MiddlewareTCP resources."
+      "$ref": "#/definitions/resourceMap",
+      "description": "Map of MiddlewareTCP resources."
     },
     "serversTransports": {
-      "$ref": "#/definitions/resourceList",
-      "description": "List of ServersTransport resources."
+      "$ref": "#/definitions/resourceMap",
+      "description": "Map of ServersTransport resources."
     },
     "serversTransportTCPs": {
-      "$ref": "#/definitions/resourceList",
-      "description": "List of ServersTransportTCP resources."
+      "$ref": "#/definitions/resourceMap",
+      "description": "Map of ServersTransportTCP resources."
     },
     "tlsOptions": {
-      "$ref": "#/definitions/resourceList",
-      "description": "List of TLSOption resources."
+      "$ref": "#/definitions/resourceMap",
+      "description": "Map of TLSOption resources."
     },
     "tlsStores": {
-      "$ref": "#/definitions/resourceList",
-      "description": "List of TLSStore resources."
+      "$ref": "#/definitions/resourceMap",
+      "description": "Map of TLSStore resources."
     },
     "traefikServices": {
-      "$ref": "#/definitions/resourceList",
-      "description": "List of TraefikService resources."
+      "$ref": "#/definitions/resourceMap",
+      "description": "Map of TraefikService resources."
     }
   },
   "definitions": {
@@ -157,10 +157,13 @@
         }
       }
     },
-    "resourceList": {
-      "type": "array",
-      "default": [],
-      "items": {
+    "resourceMap": {
+      "type": "object",
+      "default": {},
+      "propertyNames": {
+        "$ref": "#/definitions/nonEmptyString"
+      },
+      "additionalProperties": {
         "$ref": "#/definitions/resourceItem"
       }
     }
