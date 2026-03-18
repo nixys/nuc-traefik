@@ -64,6 +64,7 @@ Every list item uses the same generic contract:
 
 | Field | Required | Description |
 |-------|----------|-------------|
+| `enabled` | no | When `false`, the chart skips rendering the item. |
 | `name` | yes | Resource name. |
 | `namespace` | no | Namespace for namespaced resources. Defaults to the Helm release namespace. |
 | `labels` | no | Labels merged on top of built-in chart labels and `commonLabels`. |

@@ -127,8 +127,12 @@
           "$ref": "#/definitions/nonEmptyString",
           "description": "Resource name."
         },
+        "enabled": {
+          "type": "boolean",
+          "description": "Whether to render the resource item."
+        },
         "namespace": {
-          "$ref": "#/definitions/nonEmptyString",
+          "type": "string",
           "description": "Namespace for namespaced resources. Defaults to the Helm release namespace."
         },
         "labels": {
@@ -140,7 +144,7 @@
           "description": "Resource-specific annotations."
         },
         "apiVersion": {
-          "$ref": "#/definitions/nonEmptyString",
+          "type": "string",
           "description": "Per-resource API version override."
         },
         "spec": {
