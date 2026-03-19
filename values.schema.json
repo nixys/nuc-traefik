@@ -1,0 +1,171 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "title": "nuc-traefik values",
+  "description": "Schema for nuc-traefik Helm chart values.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "nameOverride": {
+      "type": "string",
+      "description": "Override the chart name used in generated labels."
+    },
+    "commonLabels": {
+      "$ref": "#/definitions/stringMap",
+      "description": "Labels merged into every rendered resource."
+    },
+    "commonAnnotations": {
+      "$ref": "#/definitions/stringMap",
+      "description": "Annotations merged into every rendered resource."
+    },
+    "apiVersions": {
+      "type": "object",
+      "description": "Default API version overrides per supported Traefik CRD kind.",
+      "additionalProperties": false,
+      "properties": {
+        "ingressRoute": {
+          "$ref": "#/definitions/nonEmptyString"
+        },
+        "ingressRouteTCP": {
+          "$ref": "#/definitions/nonEmptyString"
+        },
+        "ingressRouteUDP": {
+          "$ref": "#/definitions/nonEmptyString"
+        },
+        "middleware": {
+          "$ref": "#/definitions/nonEmptyString"
+        },
+        "middlewareTCP": {
+          "$ref": "#/definitions/nonEmptyString"
+        },
+        "serversTransport": {
+          "$ref": "#/definitions/nonEmptyString"
+        },
+        "serversTransportTCP": {
+          "$ref": "#/definitions/nonEmptyString"
+        },
+        "tlsOption": {
+          "$ref": "#/definitions/nonEmptyString"
+        },
+        "tlsStore": {
+          "$ref": "#/definitions/nonEmptyString"
+        },
+        "traefikService": {
+          "$ref": "#/definitions/nonEmptyString"
+        }
+      }
+    },
+    "ingressRoutes": {
+      "$ref": "#/definitions/resourceMap",
+      "description": "Map of IngressRoute resources."
+    },
+    "ingressRouteTCPs": {
+      "$ref": "#/definitions/resourceMap",
+      "description": "Map of IngressRouteTCP resources."
+    },
+    "ingressRouteUDPs": {
+      "$ref": "#/definitions/resourceMap",
+      "description": "Map of IngressRouteUDP resources."
+    },
+    "middlewares": {
+      "$ref": "#/definitions/resourceMap",
+      "description": "Map of Middleware resources."
+    },
+    "middlewareTCPs": {
+      "$ref": "#/definitions/resourceMap",
+      "description": "Map of MiddlewareTCP resources."
+    },
+    "serversTransports": {
+      "$ref": "#/definitions/resourceMap",
+      "description": "Map of ServersTransport resources."
+    },
+    "serversTransportTCPs": {
+      "$ref": "#/definitions/resourceMap",
+      "description": "Map of ServersTransportTCP resources."
+    },
+    "tlsOptions": {
+      "$ref": "#/definitions/resourceMap",
+      "description": "Map of TLSOption resources."
+    },
+    "tlsStores": {
+      "$ref": "#/definitions/resourceMap",
+      "description": "Map of TLSStore resources."
+    },
+    "traefikServices": {
+      "$ref": "#/definitions/resourceMap",
+      "description": "Map of TraefikService resources."
+    }
+  },
+  "definitions": {
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "stringMap": {
+      "type": "object",
+      "default": {},
+      "propertyNames": {
+        "type": "string",
+        "minLength": 1
+      },
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "freeFormObject": {
+      "type": "object",
+      "description": "Arbitrary Traefik CRD payload passed through by the chart.",
+      "additionalProperties": true
+    },
+    "resourceItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "$ref": "#/definitions/nonEmptyString",
+          "description": "Resource name."
+        },
+        "enabled": {
+          "type": "boolean",
+          "description": "Whether to render the resource item."
+        },
+        "namespace": {
+          "type": "string",
+          "description": "Namespace for namespaced resources. Defaults to the Helm release namespace."
+        },
+        "labels": {
+          "$ref": "#/definitions/stringMap",
+          "description": "Resource-specific labels."
+        },
+        "annotations": {
+          "$ref": "#/definitions/stringMap",
+          "description": "Resource-specific annotations."
+        },
+        "apiVersion": {
+          "type": "string",
+          "description": "Per-resource API version override."
+        },
+        "spec": {
+          "$ref": "#/definitions/freeFormObject",
+          "description": "Resource spec rendered as-is."
+        },
+        "status": {
+          "$ref": "#/definitions/freeFormObject",
+          "description": "Optional resource status rendered as-is."
+        }
+      }
+    },
+    "resourceMap": {
+      "type": "object",
+      "default": {},
+      "propertyNames": {
+        "$ref": "#/definitions/nonEmptyString"
+      },
+      "additionalProperties": {
+        "$ref": "#/definitions/resourceItem"
+      }
+    }
+  }
+}

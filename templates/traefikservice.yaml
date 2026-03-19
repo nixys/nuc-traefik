@@ -1,0 +1,13 @@
+{{- range $key, $item := .Values.traefikServices }}
+{{- if (or (not (hasKey $item "enabled")) $item.enabled) }}
+---
+{{ include "nuc-traefik.renderResource" (dict
+  "root" $
+  "item" $item
+  "kind" "TraefikService"
+  "defaultApiVersion" $.Values.apiVersions.traefikService
+  "resourceKey" (printf "traefikServices.%v" $key)
+  "namespaced" true
+) }}
+{{- end }}
+{{- end }}

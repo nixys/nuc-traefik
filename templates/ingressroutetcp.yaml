@@ -1,0 +1,13 @@
+{{- range $key, $item := .Values.ingressRouteTCPs }}
+{{- if (or (not (hasKey $item "enabled")) $item.enabled) }}
+---
+{{ include "nuc-traefik.renderResource" (dict
+  "root" $
+  "item" $item
+  "kind" "IngressRouteTCP"
+  "defaultApiVersion" $.Values.apiVersions.ingressRouteTCP
+  "resourceKey" (printf "ingressRouteTCPs.%v" $key)
+  "namespaced" true
+) }}
+{{- end }}
+{{- end }}

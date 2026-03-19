@@ -1,0 +1,346 @@
+# -- Override the default chart label name if needed.
+nameOverride: ""
+
+# -- Extra labels applied to every rendered resource.
+commonLabels: {}
+# -- Extra annotations applied to every rendered resource.
+commonAnnotations: {}
+
+# The defaults below are aligned with the Traefik v3.6 CRD bundle published at:
+# https://raw.githubusercontent.com/traefik/traefik/v3.6/docs/content/reference/dynamic-configuration/kubernetes-crd-definition-v1.yml
+# Override them if your cluster serves another group/version combination.
+apiVersions:
+  # -- Default apiVersion for IngressRoute resources.
+  ingressRoute: traefik.io/v1alpha1
+  # -- Default apiVersion for IngressRouteTCP resources.
+  ingressRouteTCP: traefik.io/v1alpha1
+  # -- Default apiVersion for IngressRouteUDP resources.
+  ingressRouteUDP: traefik.io/v1alpha1
+  # -- Default apiVersion for Middleware resources.
+  middleware: traefik.io/v1alpha1
+  # -- Default apiVersion for MiddlewareTCP resources.
+  middlewareTCP: traefik.io/v1alpha1
+  # -- Default apiVersion for ServersTransport resources.
+  serversTransport: traefik.io/v1alpha1
+  # -- Default apiVersion for ServersTransportTCP resources.
+  serversTransportTCP: traefik.io/v1alpha1
+  # -- Default apiVersion for TLSOption resources.
+  tlsOption: traefik.io/v1alpha1
+  # -- Default apiVersion for TLSStore resources.
+  tlsStore: traefik.io/v1alpha1
+  # -- Default apiVersion for TraefikService resources.
+  traefikService: traefik.io/v1alpha1
+
+# Resource maps below are intentionally seeded with one disabled placeholder item so helm-docs
+# can expose the nested resource-item contract. Templates skip items with enabled=false, so the
+# default chart values still render no manifests.
+
+# IngressRoute resources to render.
+ingressRoutes:
+  example:
+    # -- Enable rendering of this resource item.
+    enabled: false
+    # -- Resource name.
+    # @default -- ""
+    name: example-ingressroute
+    # -- Resource namespace. Defaults to the Helm release namespace when empty.
+    # @default -- ""
+    namespace: ""
+    # -- Resource-specific labels merged on top of built-in chart labels and commonLabels.
+    # @default -- {}
+    labels:
+      example: value
+    # -- Resource-specific annotations merged on top of commonAnnotations.
+    # @default -- {}
+    annotations:
+      example: value
+    # -- Per-resource apiVersion override.
+    # @default -- ""
+    apiVersion: ""
+    # -- Arbitrary resource spec rendered as-is.
+    # @default -- {}
+    spec:
+      example: value
+    # -- Optional resource status rendered as-is for fixtures and synthetic manifests.
+    # @default -- {}
+    status:
+      example: value
+
+# IngressRouteTCP resources to render.
+ingressRouteTCPs:
+  example:
+    # -- Enable rendering of this resource item.
+    enabled: false
+    # -- Resource name.
+    # @default -- ""
+    name: example-ingressroutetcp
+    # -- Resource namespace. Defaults to the Helm release namespace when empty.
+    # @default -- ""
+    namespace: ""
+    # -- Resource-specific labels merged on top of built-in chart labels and commonLabels.
+    # @default -- {}
+    labels:
+      example: value
+    # -- Resource-specific annotations merged on top of commonAnnotations.
+    # @default -- {}
+    annotations:
+      example: value
+    # -- Per-resource apiVersion override.
+    # @default -- ""
+    apiVersion: ""
+    # -- Arbitrary resource spec rendered as-is.
+    # @default -- {}
+    spec:
+      example: value
+    # -- Optional resource status rendered as-is for fixtures and synthetic manifests.
+    # @default -- {}
+    status:
+      example: value
+
+# IngressRouteUDP resources to render.
+ingressRouteUDPs:
+  example:
+    # -- Enable rendering of this resource item.
+    enabled: false
+    # -- Resource name.
+    # @default -- ""
+    name: example-ingressrouteudp
+    # -- Resource namespace. Defaults to the Helm release namespace when empty.
+    # @default -- ""
+    namespace: ""
+    # -- Resource-specific labels merged on top of built-in chart labels and commonLabels.
+    # @default -- {}
+    labels:
+      example: value
+    # -- Resource-specific annotations merged on top of commonAnnotations.
+    # @default -- {}
+    annotations:
+      example: value
+    # -- Per-resource apiVersion override.
+    # @default -- ""
+    apiVersion: ""
+    # -- Arbitrary resource spec rendered as-is.
+    # @default -- {}
+    spec:
+      example: value
+    # -- Optional resource status rendered as-is for fixtures and synthetic manifests.
+    # @default -- {}
+    status:
+      example: value
+
+# Middleware resources to render.
+middlewares:
+  example:
+    # -- Enable rendering of this resource item.
+    enabled: false
+    # -- Resource name.
+    # @default -- ""
+    name: example-middleware
+    # -- Resource namespace. Defaults to the Helm release namespace when empty.
+    # @default -- ""
+    namespace: ""
+    # -- Resource-specific labels merged on top of built-in chart labels and commonLabels.
+    # @default -- {}
+    labels:
+      example: value
+    # -- Resource-specific annotations merged on top of commonAnnotations.
+    # @default -- {}
+    annotations:
+      example: value
+    # -- Per-resource apiVersion override.
+    # @default -- ""
+    apiVersion: ""
+    # -- Arbitrary resource spec rendered as-is.
+    # @default -- {}
+    spec:
+      example: value
+    # -- Optional resource status rendered as-is for fixtures and synthetic manifests.
+    # @default -- {}
+    status:
+      example: value
+
+# MiddlewareTCP resources to render.
+middlewareTCPs:
+  example:
+    # -- Enable rendering of this resource item.
+    enabled: false
+    # -- Resource name.
+    # @default -- ""
+    name: example-middlewaretcp
+    # -- Resource namespace. Defaults to the Helm release namespace when empty.
+    # @default -- ""
+    namespace: ""
+    # -- Resource-specific labels merged on top of built-in chart labels and commonLabels.
+    # @default -- {}
+    labels:
+      example: value
+    # -- Resource-specific annotations merged on top of commonAnnotations.
+    # @default -- {}
+    annotations:
+      example: value
+    # -- Per-resource apiVersion override.
+    # @default -- ""
+    apiVersion: ""
+    # -- Arbitrary resource spec rendered as-is.
+    # @default -- {}
+    spec:
+      example: value
+    # -- Optional resource status rendered as-is for fixtures and synthetic manifests.
+    # @default -- {}
+    status:
+      example: value
+
+# ServersTransport resources to render.
+serversTransports:
+  example:
+    # -- Enable rendering of this resource item.
+    enabled: false
+    # -- Resource name.
+    # @default -- ""
+    name: example-serverstransport
+    # -- Resource namespace. Defaults to the Helm release namespace when empty.
+    # @default -- ""
+    namespace: ""
+    # -- Resource-specific labels merged on top of built-in chart labels and commonLabels.
+    # @default -- {}
+    labels:
+      example: value
+    # -- Resource-specific annotations merged on top of commonAnnotations.
+    # @default -- {}
+    annotations:
+      example: value
+    # -- Per-resource apiVersion override.
+    # @default -- ""
+    apiVersion: ""
+    # -- Arbitrary resource spec rendered as-is.
+    # @default -- {}
+    spec:
+      example: value
+    # -- Optional resource status rendered as-is for fixtures and synthetic manifests.
+    # @default -- {}
+    status:
+      example: value
+
+# ServersTransportTCP resources to render.
+serversTransportTCPs:
+  example:
+    # -- Enable rendering of this resource item.
+    enabled: false
+    # -- Resource name.
+    # @default -- ""
+    name: example-serverstransporttcp
+    # -- Resource namespace. Defaults to the Helm release namespace when empty.
+    # @default -- ""
+    namespace: ""
+    # -- Resource-specific labels merged on top of built-in chart labels and commonLabels.
+    # @default -- {}
+    labels:
+      example: value
+    # -- Resource-specific annotations merged on top of commonAnnotations.
+    # @default -- {}
+    annotations:
+      example: value
+    # -- Per-resource apiVersion override.
+    # @default -- ""
+    apiVersion: ""
+    # -- Arbitrary resource spec rendered as-is.
+    # @default -- {}
+    spec:
+      example: value
+    # -- Optional resource status rendered as-is for fixtures and synthetic manifests.
+    # @default -- {}
+    status:
+      example: value
+
+# TLSOption resources to render.
+tlsOptions:
+  example:
+    # -- Enable rendering of this resource item.
+    enabled: false
+    # -- Resource name.
+    # @default -- ""
+    name: example-tlsoption
+    # -- Resource namespace. Defaults to the Helm release namespace when empty.
+    # @default -- ""
+    namespace: ""
+    # -- Resource-specific labels merged on top of built-in chart labels and commonLabels.
+    # @default -- {}
+    labels:
+      example: value
+    # -- Resource-specific annotations merged on top of commonAnnotations.
+    # @default -- {}
+    annotations:
+      example: value
+    # -- Per-resource apiVersion override.
+    # @default -- ""
+    apiVersion: ""
+    # -- Arbitrary resource spec rendered as-is.
+    # @default -- {}
+    spec:
+      example: value
+    # -- Optional resource status rendered as-is for fixtures and synthetic manifests.
+    # @default -- {}
+    status:
+      example: value
+
+# TLSStore resources to render.
+tlsStores:
+  example:
+    # -- Enable rendering of this resource item.
+    enabled: false
+    # -- Resource name.
+    # @default -- ""
+    name: example-tlsstore
+    # -- Resource namespace. Defaults to the Helm release namespace when empty.
+    # @default -- ""
+    namespace: ""
+    # -- Resource-specific labels merged on top of built-in chart labels and commonLabels.
+    # @default -- {}
+    labels:
+      example: value
+    # -- Resource-specific annotations merged on top of commonAnnotations.
+    # @default -- {}
+    annotations:
+      example: value
+    # -- Per-resource apiVersion override.
+    # @default -- ""
+    apiVersion: ""
+    # -- Arbitrary resource spec rendered as-is.
+    # @default -- {}
+    spec:
+      example: value
+    # -- Optional resource status rendered as-is for fixtures and synthetic manifests.
+    # @default -- {}
+    status:
+      example: value
+
+# TraefikService resources to render.
+traefikServices:
+  example:
+    # -- Enable rendering of this resource item.
+    enabled: false
+    # -- Resource name.
+    # @default -- ""
+    name: example-traefikservice
+    # -- Resource namespace. Defaults to the Helm release namespace when empty.
+    # @default -- ""
+    namespace: ""
+    # -- Resource-specific labels merged on top of built-in chart labels and commonLabels.
+    # @default -- {}
+    labels:
+      example: value
+    # -- Resource-specific annotations merged on top of commonAnnotations.
+    # @default -- {}
+    annotations:
+      example: value
+    # -- Per-resource apiVersion override.
+    # @default -- ""
+    apiVersion: ""
+    # -- Arbitrary resource spec rendered as-is.
+    # @default -- {}
+    spec:
+      example: value
+    # -- Optional resource status rendered as-is for fixtures and synthetic manifests.
+    # @default -- {}
+    status:
+      example: value

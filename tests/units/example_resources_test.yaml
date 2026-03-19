@@ -1,0 +1,269 @@
+suite: example resources
+templates:
+  - templates/ingressroute.yaml
+  - templates/ingressroutetcp.yaml
+  - templates/ingressrouteudp.yaml
+  - templates/middleware.yaml
+  - templates/middlewaretcp.yaml
+  - templates/serverstransport.yaml
+  - templates/serverstransporttcp.yaml
+  - templates/tlsoption.yaml
+  - templates/tlsstore.yaml
+  - templates/traefikservice.yaml
+release:
+  name: unit-test
+  namespace: unit-namespace
+
+tests:
+  - it: renders the expected document count per template
+    values:
+      - ../../values.yaml.example
+    asserts:
+      - hasDocuments:
+          count: 1
+        template: templates/ingressroute.yaml
+      - hasDocuments:
+          count: 1
+        template: templates/ingressroutetcp.yaml
+      - hasDocuments:
+          count: 1
+        template: templates/ingressrouteudp.yaml
+      - hasDocuments:
+          count: 1
+        template: templates/middleware.yaml
+      - hasDocuments:
+          count: 1
+        template: templates/middlewaretcp.yaml
+      - hasDocuments:
+          count: 1
+        template: templates/serverstransport.yaml
+      - hasDocuments:
+          count: 1
+        template: templates/serverstransporttcp.yaml
+      - hasDocuments:
+          count: 1
+        template: templates/tlsoption.yaml
+      - hasDocuments:
+          count: 1
+        template: templates/tlsstore.yaml
+      - hasDocuments:
+          count: 1
+        template: templates/traefikservice.yaml
+
+  - it: renders the expected example manifests
+    values:
+      - ../../values.yaml.example
+    asserts:
+      - containsDocument:
+          kind: IngressRoute
+          apiVersion: traefik.io/v1alpha1
+          name: api-http
+          namespace: edge
+          any: true
+        template: templates/ingressroute.yaml
+      - containsDocument:
+          kind: IngressRouteTCP
+          apiVersion: traefik.io/v1alpha1
+          name: postgres-tcp
+          namespace: edge
+          any: true
+        template: templates/ingressroutetcp.yaml
+      - containsDocument:
+          kind: IngressRouteUDP
+          apiVersion: traefik.io/v1alpha1
+          name: dns-udp
+          namespace: edge
+          any: true
+        template: templates/ingressrouteudp.yaml
+      - containsDocument:
+          kind: Middleware
+          apiVersion: traefik.io/v1alpha1
+          name: api-security
+          namespace: edge
+          any: true
+        template: templates/middleware.yaml
+      - containsDocument:
+          kind: MiddlewareTCP
+          apiVersion: traefik.io/v1alpha1
+          name: db-allowlist
+          namespace: edge
+          any: true
+        template: templates/middlewaretcp.yaml
+      - containsDocument:
+          kind: ServersTransport
+          apiVersion: traefik.io/v1alpha1
+          name: backend-transport
+          namespace: edge
+          any: true
+        template: templates/serverstransport.yaml
+      - containsDocument:
+          kind: ServersTransportTCP
+          apiVersion: traefik.io/v1alpha1
+          name: database-transport
+          namespace: edge
+          any: true
+        template: templates/serverstransporttcp.yaml
+      - containsDocument:
+          kind: TLSOption
+          apiVersion: traefik.io/v1alpha1
+          name: modern-tls
+          namespace: edge
+          any: true
+        template: templates/tlsoption.yaml
+      - containsDocument:
+          kind: TLSStore
+          apiVersion: traefik.io/v1alpha1
+          name: default
+          namespace: edge
+          any: true
+        template: templates/tlsstore.yaml
+      - containsDocument:
+          kind: TraefikService
+          apiVersion: traefik.io/v1alpha1
+          name: api-weighted
+          namespace: edge
+          any: true
+        template: templates/traefikservice.yaml
+
+  - it: renders the IngressRoute example
+    values:
+      - ../../values.yaml.example
+    template: templates/ingressroute.yaml
+    documentSelector:
+      path: metadata.name
+      value: api-http
+    asserts:
+      - isKind:
+          of: IngressRoute
+      - equal:
+          path: spec.routes[0].services[0].kind
+          value: TraefikService
+      - equal:
+          path: spec.tls.options.name
+          value: modern-tls
+
+  - it: renders the IngressRouteTCP example
+    values:
+      - ../../values.yaml.example
+    template: templates/ingressroutetcp.yaml
+    documentSelector:
+      path: metadata.name
+      value: postgres-tcp
+    asserts:
+      - isKind:
+          of: IngressRouteTCP
+      - equal:
+          path: spec.routes[0].services[1].weight
+          value: 20
+
+  - it: renders the IngressRouteUDP example
+    values:
+      - ../../values.yaml.example
+    template: templates/ingressrouteudp.yaml
+    documentSelector:
+      path: metadata.name
+      value: dns-udp
+    asserts:
+      - isKind:
+          of: IngressRouteUDP
+      - equal:
+          path: spec.routes[0].services[1].weight
+          value: 5
+
+  - it: renders the Middleware example
+    values:
+      - ../../values.yaml.example
+    template: templates/middleware.yaml
+    documentSelector:
+      path: metadata.name
+      value: api-security
+    asserts:
+      - isKind:
+          of: Middleware
+      - equal:
+          path: spec.headers.customRequestHeaders.X-Forwarded-Env
+          value: production
+
+  - it: renders the MiddlewareTCP example
+    values:
+      - ../../values.yaml.example
+    template: templates/middlewaretcp.yaml
+    documentSelector:
+      path: metadata.name
+      value: db-allowlist
+    asserts:
+      - isKind:
+          of: MiddlewareTCP
+      - equal:
+          path: spec.ipAllowList.sourceRange[0]
+          value: 10.0.0.0/8
+
+  - it: renders the ServersTransport example
+    values:
+      - ../../values.yaml.example
+    template: templates/serverstransport.yaml
+    documentSelector:
+      path: metadata.name
+      value: backend-transport
+    asserts:
+      - isKind:
+          of: ServersTransport
+      - equal:
+          path: spec.forwardingTimeouts.responseHeaderTimeout
+          value: 15s
+
+  - it: renders the ServersTransportTCP example
+    values:
+      - ../../values.yaml.example
+    template: templates/serverstransporttcp.yaml
+    documentSelector:
+      path: metadata.name
+      value: database-transport
+    asserts:
+      - isKind:
+          of: ServersTransportTCP
+      - equal:
+          path: spec.tls.serverName
+          value: db.internal.example.com
+
+  - it: renders the TLSOption example
+    values:
+      - ../../values.yaml.example
+    template: templates/tlsoption.yaml
+    documentSelector:
+      path: metadata.name
+      value: modern-tls
+    asserts:
+      - isKind:
+          of: TLSOption
+      - equal:
+          path: spec.clientAuth.secretNames[0]
+          value: edge-client-ca
+
+  - it: renders the TLSStore example
+    values:
+      - ../../values.yaml.example
+    template: templates/tlsstore.yaml
+    documentSelector:
+      path: metadata.name
+      value: default
+    asserts:
+      - isKind:
+          of: TLSStore
+      - equal:
+          path: spec.defaultCertificate.secretName
+          value: edge-default-cert
+
+  - it: renders the TraefikService example
+    values:
+      - ../../values.yaml.example
+    template: templates/traefikservice.yaml
+    documentSelector:
+      path: metadata.name
+      value: api-weighted
+    asserts:
+      - isKind:
+          of: TraefikService
+      - equal:
+          path: spec.weighted.services[1].weight
+          value: 10

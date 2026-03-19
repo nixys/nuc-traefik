@@ -1,0 +1,90 @@
+suite: rendering contract
+templates:
+  - templates/ingressroute.yaml
+  - templates/tlsstore.yaml
+release:
+  name: unit-test
+  namespace: unit-namespace
+
+tests:
+  - it: renders no IngressRoute documents by default
+    template: templates/ingressroute.yaml
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: renders no TLSStore documents by default
+    template: templates/tlsstore.yaml
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: applies helper defaults and overrides for namespaced resources
+    values:
+      - values/rendering_contract.values.yaml
+    template: templates/ingressroute.yaml
+    documentSelector:
+      path: metadata.name
+      value: merged-ingressroute
+    asserts:
+      - isKind:
+          of: IngressRoute
+      - equal:
+          path: apiVersion
+          value: example.net/v1alpha1
+      - equal:
+          path: metadata.namespace
+          value: unit-namespace
+      - equal:
+          path: metadata.labels["app.kubernetes.io/name"]
+          value: traefik-platform
+      - equal:
+          path: metadata.labels.platform
+          value: traefik-crd
+      - equal:
+          path: metadata.labels.component
+          value: ingress-route
+      - equal:
+          path: metadata.labels.tier
+          value: edge
+      - equal:
+          path: metadata.annotations.team
+          value: platform
+      - equal:
+          path: metadata.annotations.note
+          value: external
+      - equal:
+          path: spec.routes[0].services[0].port
+          value: 8080
+
+  - it: renders explicit namespace and configured apiVersion on namespaced resources
+    values:
+      - values/rendering_contract.values.yaml
+    template: templates/tlsstore.yaml
+    documentSelector:
+      path: metadata.name
+      value: tenant-store
+    asserts:
+      - isKind:
+          of: TLSStore
+      - equal:
+          path: apiVersion
+          value: example.net/v1beta1
+      - equal:
+          path: metadata.namespace
+          value: tenant-system
+      - equal:
+          path: metadata.labels["app.kubernetes.io/name"]
+          value: traefik-platform
+      - equal:
+          path: metadata.labels.component
+          value: tls-store
+      - equal:
+          path: metadata.annotations.team
+          value: platform
+      - equal:
+          path: metadata.annotations.note
+          value: tenant
+      - equal:
+          path: spec.defaultCertificate.secretName
+          value: tenant-cert

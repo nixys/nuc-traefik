@@ -1,0 +1,43 @@
+nameOverride: traefik-platform
+
+commonLabels:
+  platform: traefik-crd
+  component: shared
+  tier: common
+
+commonAnnotations:
+  team: platform
+  note: common
+
+apiVersions:
+  tlsStore: example.net/v1beta1
+
+ingressRoutes:
+  merged:
+    name: merged-ingressroute
+    apiVersion: example.net/v1alpha1
+    labels:
+      component: ingress-route
+      tier: edge
+    annotations:
+      note: external
+    spec:
+      entryPoints:
+        - websecure
+      routes:
+        - match: Host(`app.example.com`)
+          services:
+            - name: app-backend
+              port: 8080
+
+tlsStores:
+  tenant:
+    name: tenant-store
+    namespace: tenant-system
+    labels:
+      component: tls-store
+    annotations:
+      note: tenant
+    spec:
+      defaultCertificate:
+        secretName: tenant-cert
