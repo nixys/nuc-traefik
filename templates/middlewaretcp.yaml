@@ -1,4 +1,5 @@
 {{- range $key, $item := .Values.middlewareTCPs }}
+{{- if kindIs "map" $item }}
 {{- if (or (not (hasKey $item "enabled")) $item.enabled) }}
 ---
 {{ include "nuc-traefik.renderResource" (dict
@@ -9,5 +10,6 @@
   "resourceKey" (printf "middlewareTCPs.%v" $key)
   "namespaced" true
 ) }}
+{{- end }}
 {{- end }}
 {{- end }}

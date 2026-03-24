@@ -48,6 +48,17 @@ class SmokeContext:
             / "invalid-missing-name.values.yaml"
         )
 
+    
+    @property
+    def null_override_values(self) -> Path:
+        return (
+            self.repo_root
+            / "tests"
+            / "smokes"
+            / "fixtures"
+            / "null-override.values.yaml"
+        )
+
 
 def check_default_empty(context: SmokeContext) -> None:
     helm.lint(context.chart_dir, workdir=context.workdir)
@@ -132,6 +143,45 @@ def check_rendering_contract(context: SmokeContext) -> None:
     render.assert_path(
         tls_store, "spec.defaultCertificate.secretName", "tenant-cert"
     )
+
+
+def check_null_override(context: SmokeContext) -> None:
+    helm.lint(
+        context.chart_dir,
+        values_file=context.example_values,
+        values_files=[context.null_override_values],
+        workdir=context.workdir,
+    )
+    output_path = context.render_dir / "null-override.yaml"
+    helm.template(
+        context.chart_dir,
+        release_name=context.release_name,
+        namespace=context.namespace,
+        values_file=context.example_values,
+        values_files=[context.null_override_values],
+        output_path=output_path,
+        workdir=context.workdir,
+    )
+
+    documents = render.load_documents(output_path)
+    render.assert_doc_count(documents, 9)
+    render.assert_kinds(
+        documents,
+        {
+            "IngressRoute",
+            "IngressRouteTCP",
+            "IngressRouteUDP",
+            "MiddlewareTCP",
+            "ServersTransport",
+            "ServersTransportTCP",
+            "TLSOption",
+            "TLSStore",
+            "TraefikService",
+        },
+    )
+
+    tls_store = render.select_document(documents, kind="TLSStore", name="default")
+    render.assert_path(tls_store, "metadata.namespace", "edge")
 
 
 def check_example_render(context: SmokeContext) -> None:
@@ -241,6 +291,7 @@ SCENARIOS: list[tuple[str, Callable[[SmokeContext], None]]] = [
     ("default-empty", check_default_empty),
     ("schema-invalid-missing-name", check_schema_invalid_missing_name),
     ("rendering-contract", check_rendering_contract),
+    ("null-override", check_null_override),
     ("example-render", check_example_render),
     ("example-kubeconform", check_example_kubeconform),
 ]

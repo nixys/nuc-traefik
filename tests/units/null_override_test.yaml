@@ -1,0 +1,42 @@
+suite: null override contract
+templates:
+  - templates/middleware.yaml
+  - templates/tlsstore.yaml
+release:
+  name: unit-test
+  namespace: unit-namespace
+
+tests:
+  - it: suppresses a default resource when the override file sets it to null
+    values:
+      - ../../values.yaml.example
+      - values/null_override.values.yaml
+    asserts:
+      - hasDocuments:
+          count: 0
+        template: templates/middleware.yaml
+      - hasDocuments:
+          count: 1
+        template: templates/tlsstore.yaml
+      - containsDocument:
+          kind: TLSStore
+          apiVersion: traefik.io/v1alpha1
+          name: default
+          namespace: edge
+          any: true
+        template: templates/tlsstore.yaml
+
+  - it: keeps unaffected resources after null override
+    values:
+      - ../../values.yaml.example
+      - values/null_override.values.yaml
+    template: templates/tlsstore.yaml
+    documentSelector:
+      path: metadata.name
+      value: default
+    asserts:
+      - isKind:
+          of: TLSStore
+      - equal:
+          path: spec.defaultCertificate.secretName
+          value: edge-default-cert

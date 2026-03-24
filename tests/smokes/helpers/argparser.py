@@ -8,6 +8,7 @@ SCENARIO_CHOICES = [
     "default-empty",
     "schema-invalid-missing-name",
     "rendering-contract",
+    "null-override",
     "example-render",
     "example-kubeconform",
 ]

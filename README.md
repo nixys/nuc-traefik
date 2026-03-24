@@ -75,8 +75,12 @@ Every map entry uses the same generic contract:
 
 The map key is only an identifier inside `values.yaml`; the rendered Kubernetes object name still comes from the required `name` field.
 
+In a higher-precedence values file, set a map entry to `null` to suppress a default resource from a lower-precedence values file.
+
 Global controls:
 
+- `enabled`
+- `global` (accepted for umbrella-chart compatibility and ignored by this chart)
 - `nameOverride`
 - `commonLabels`
 - `commonAnnotations`
@@ -102,6 +106,8 @@ This section is generated from [values.yaml](values.yaml) by `helm-docs`. Edit [
 | apiVersions.traefikService | string | `"traefik.io/v1alpha1"` | Default apiVersion for TraefikService resources. |
 | commonAnnotations | object | `{}` | Extra annotations applied to every rendered resource. |
 | commonLabels | object | `{}` | Extra labels applied to every rendered resource. |
+| enabled | bool | `true` | Enable nuc-traefik chart rendering. |
+| global | object | `{}` | Compatibility values inherited from umbrella charts. Accepted but ignored by this chart. |
 | ingressRouteTCPs.example.annotations | object | {} | Resource-specific annotations merged on top of commonAnnotations. |
 | ingressRouteTCPs.example.apiVersion | string | "" | Per-resource apiVersion override. |
 | ingressRouteTCPs.example.enabled | bool | `false` | Enable rendering of this resource item. |

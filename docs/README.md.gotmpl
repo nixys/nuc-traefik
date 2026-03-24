@@ -75,8 +75,12 @@ Every map entry uses the same generic contract:
 
 The map key is only an identifier inside `values.yaml`; the rendered Kubernetes object name still comes from the required `name` field.
 
+In a higher-precedence values file, set a map entry to `null` to suppress a default resource from a lower-precedence values file.
+
 Global controls:
 
+- `enabled`
+- `global` (accepted for umbrella-chart compatibility and ignored by this chart)
 - `nameOverride`
 - `commonLabels`
 - `commonAnnotations`
