@@ -8,10 +8,12 @@ Defaults are aligned with the Traefik v3.6 CRD bundle published at [raw.githubus
 
 ## Quick Start
 
-Render the example configuration:
+Add the Nixys chart repository:
 
 ```bash
-helm template nuc-traefik . -f values.yaml.example
+helm repo add nixys https://registry.nixys.io/chartrepo/public
+# or
+helm repo add nixys https://registry.nixys.ru/chartrepo/public
 ```
 
 Install the chart:
