@@ -3,7 +3,7 @@ apiVersion: v2
 name: nuc-traefik
 description: Helm chart for Traefik Kubernetes CRD resources
 type: application
-version: 1.0.0-rc6
+version: 1.0.0-rc7
 appVersion: "v3.6"
 icon: https://registry.nixys.ru/logo.png
 home: https://github.com/nixys/nuc-istio
