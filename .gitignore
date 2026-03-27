@@ -1,12 +1,10 @@
 .idea/
 .vscode/
 tmp/
+test*.yml
 private/
 values-test.yaml
 __pycache__/
 *.pyc
-build/
-.bin/
-.cache/
-.helm/
-.rendered/
+charts/
+Chart.lock
