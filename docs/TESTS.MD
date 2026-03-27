@@ -104,10 +104,13 @@ tests/smokes/
 1. `default-empty`
    Verifies that the chart renders no manifests with default values.
 
-2. `schema-invalid-missing-name`
+2. `schema-invalid-list-contract`
+   Verifies that `values.schema.json` rejects the old list-based top-level resource contract.
+
+3. `schema-invalid-missing-name`
    Verifies that `values.schema.json` rejects a resource item without `name`.
 
-3. `rendering-contract`
+4. `rendering-contract`
    Verifies chart-owned behavior:
    - `nameOverride`
    - merged labels and annotations
@@ -115,10 +118,13 @@ tests/smokes/
    - explicit namespace override
    - global and per-resource `apiVersion`
 
-4. `example-render`
+5. `null-override`
+   Verifies that explicit `null` overrides can remove optional example resources without breaking the render.
+
+6. `example-render`
    Renders `values.yaml.example` and verifies that all supported Traefik kinds are produced.
 
-5. `example-kubeconform`
+7. `example-kubeconform`
    Renders `values.yaml.example` and validates the result with `kubeconform` against schemas generated from `tests/fixtures/traefik-crd-definition-v1.yml`.
 
 ### How kubeconform Works Here

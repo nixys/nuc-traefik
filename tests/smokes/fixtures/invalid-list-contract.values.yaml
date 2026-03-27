@@ -1,0 +1,9 @@
+ingressRoutes:
+  - name: legacy-list-ingressroute
+    namespace: edge
+    spec:
+      routes:
+        - match: Host(`legacy.example.com`)
+          services:
+            - name: legacy-backend
+              port: 80

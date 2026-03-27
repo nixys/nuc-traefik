@@ -48,7 +48,16 @@ class SmokeContext:
             / "invalid-missing-name.values.yaml"
         )
 
-    
+    @property
+    def invalid_list_contract_values(self) -> Path:
+        return (
+            self.repo_root
+            / "tests"
+            / "smokes"
+            / "fixtures"
+            / "invalid-list-contract.values.yaml"
+        )
+
     @property
     def null_override_values(self) -> Path:
         return (
@@ -90,6 +99,25 @@ def check_schema_invalid_missing_name(context: SmokeContext) -> None:
     if "name" not in combined_output:
         raise system.TestFailure(
             "helm lint failed for invalid values, but the error does not mention the missing name field"
+        )
+
+
+def check_schema_invalid_list_contract(context: SmokeContext) -> None:
+    result = helm.lint(
+        context.chart_dir,
+        values_file=context.invalid_list_contract_values,
+        workdir=context.workdir,
+        check=False,
+    )
+    if result.returncode == 0:
+        raise system.TestFailure(
+            "helm lint unexpectedly succeeded for invalid list-based resource values"
+        )
+
+    combined_output = f"{result.stdout}\n{result.stderr}".lower()
+    if "ingressroutes" not in combined_output or "array" not in combined_output:
+        raise system.TestFailure(
+            "helm lint failed for invalid list-based values, but the error does not mention the array/object contract"
         )
 
 
@@ -289,6 +317,7 @@ def check_example_kubeconform(context: SmokeContext) -> None:
 
 SCENARIOS: list[tuple[str, Callable[[SmokeContext], None]]] = [
     ("default-empty", check_default_empty),
+    ("schema-invalid-list-contract", check_schema_invalid_list_contract),
     ("schema-invalid-missing-name", check_schema_invalid_missing_name),
     ("rendering-contract", check_rendering_contract),
     ("null-override", check_null_override),
