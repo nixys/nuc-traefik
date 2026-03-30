@@ -13,18 +13,15 @@ Defaults are aligned with the Traefik v3.6 CRD bundle published at [raw.githubus
 Add the Nixys chart repository:
 
 ```bash
-helm repo add nixys https://registry.nixys.io/chartrepo/public
-# or
-helm repo add nixys https://registry.nixys.ru/chartrepo/public
+helm repo add nixys https://registry.nixys.io/nuc
 ```
 
 Install the chart:
 
 ```bash
-helm install nuc-traefik . \
+helm install nuc-traefik nixys/nuc-traefik \
   --namespace traefik-system \
-  --create-namespace \
-  -f values.yaml.example
+  --create-namespace
 ```
 
 Install the local README generator hook:
