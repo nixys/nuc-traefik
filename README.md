@@ -1,6 +1,6 @@
 # NUC Traefik
 
-[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/nuc-victoria-metrics)](https://artifacthub.io/packages/search?repo=nuc-victoria-metrics)
+[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/nuc-traefik)](https://artifacthub.io/packages/search?repo=nuc-traefik)
 
 Helm chart for rendering Traefik Kubernetes CRD resources from declarative values.
 
